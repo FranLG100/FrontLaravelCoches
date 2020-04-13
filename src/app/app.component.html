@@ -10,17 +10,26 @@
         <li class="nav-item">
           <a class="nav-link">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Alumnos</a>
+        <li class="nav-item" *ngIf="identity">
+          <a class="nav-link" href="#">Crear Coche</a>
         </li>
       </ul>
 
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto" *ngIf="!identity">
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['login']">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['registro']">Registro</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto" *ngIf="identity">
+        <li class="nav-item">
+          <a class="nav-link">{{identity.name + ' ' + identity.surname}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"><span class="glyphicon glyphicon-log-out"></span>Salir</a>
         </li>
       </ul>
     </div>
