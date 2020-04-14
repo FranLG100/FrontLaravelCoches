@@ -15,10 +15,11 @@ export class LoginComponent implements OnInit{
     public user:User;
     public token;
     public identity;
+    public status:string;
 
     constructor(
-        //private _route:ActivatedRoute,
-        //private _router:Router
+        private _route:ActivatedRoute,
+        private _router:Router,
         private _userService:UserService,
     ){
         this.title='Identifícate';
@@ -27,8 +28,7 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(){
         console.log('login.component cargado correctamente');
-        let user=this._userService.getIdentity();
-        console.log(user.name);
+        this.logout();
     }
 
     onSubmit(form){
@@ -36,22 +36,48 @@ export class LoginComponent implements OnInit{
 
         this._userService.signup(this.user).subscribe(
             response=>{
-                //Token
-                this.token=response;
-                localStorage.setItem('token',this.token);
-                //Token descodificado
-                this._userService.signup(this.user,true).subscribe(
-                    response=>{
-                        this.identity=response; 
-                        localStorage.setItem('identity',JSON.stringify(this.identity));
-                    },error=>{
-                        console.log(<any>error);
-                    }
-                );
+                console.log(response);
 
+                if(response.status!='error'){
+                    this.status='success';
+                    //Token
+                    this.token=response;
+                    localStorage.setItem('token',this.token);
+                    //Token descodificado
+                    this._userService.signup(this.user,true).subscribe(
+                        response=>{
+                            
+                            this.identity=response; 
+                            localStorage.setItem('identity',JSON.stringify(this.identity));
+
+                            this._router.navigate(['inicio']);
+                        },error=>{
+                            console.log(<any>error);
+                        }
+                    );
+                }else{
+                    this.status='error';
+                }
             },error=>{
                 console.log(<any>error);
             }
+            
         );
+    }
+
+    logout(){
+        this._route.params.subscribe(params=>{
+            let logout=+params['sure'];
+
+            if(logout==1){
+                localStorage.removeItem('identity');
+                localStorage.removeItem('token');
+
+                this.identity=null;
+                this.token=null;
+
+                this._router.navigate(['inicio']);
+            }
+        });
     }
 }

@@ -1,5 +1,14 @@
 <div class="col-md-12">
     <h2>{{title}}</h2>
+
+    <div class="alert alert-success" *ngIf="status=='success'">
+        El login se ha completado correctamente
+    </div>
+
+    <div class="alert alert-danger" *ngIf="status=='error'">
+        El login ha fallado
+    </div>
+
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="col-md-5">
         <p>
             <label for="email">Email</label>

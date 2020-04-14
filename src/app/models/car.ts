@@ -3,9 +3,9 @@ export class Car{
         public id:number,
         public title:string,
         public description:string,
-        public price:string,
-        public status:Date,
-        public createdAt:string,
-        public updatedAt:string
+        public price:number,
+        public status:string,
+        public createdAt:any,
+        public updatedAt:any
     ){}
 }

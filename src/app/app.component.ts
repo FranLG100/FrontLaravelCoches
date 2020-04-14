@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import {UserService} from './services/user.service';
 
 @Component({
@@ -7,7 +7,7 @@ import {UserService} from './services/user.service';
   styleUrls: ['./app.component.css'],
   providers:[UserService]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, DoCheck{
   title = 'front-laravel';
   public token;
   public identity;
@@ -21,5 +21,11 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     console.log('cargado app.component');
+  }
+
+  //Cada vez que hay un cambio, se ejecuta esto
+  ngDoCheck(){
+    this.identity=this._userService.getIdentity();
+    this.token=this._userService.getToken();
   }
 }
