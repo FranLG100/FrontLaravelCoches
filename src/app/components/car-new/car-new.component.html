@@ -1,10 +1,16 @@
 <div class='col-md-12'>
     <h2>{{page_title}}</h2>
 
+    <div class="alert alert-danger" *ngIf="status_car == 'error'">
+        El coche no se ha guardado correctamente
+    </div>
+    <div class="alert alert-success" *ngIf="status_car == 'success'">
+        El coche se ha guardado correctamente
+    </div>
     <form #carNew="ngForm" (ngSubmit)="onSubmit(carNew)" class="col-md-5">
         <p>
             <label for="title">Título</label>
-            <input class="form-control" type="text" name="title" #title="ngModel" [(ngModel)]="car.title" require />
+            <input class="form-control" type="text" name="title" #title="ngModel" [(ngModel)]="car.title" required />
             <span *ngIf="title.touched && !title.dirty">
                 El título no es valido
             </span>
@@ -13,20 +19,20 @@
 
         <p>
             <label for="description">Descripción</label>
-            <textarea class="form-control" name="description" #description="ngModel" [(ngModel)]="car.description" require></textarea>
+            <textarea class="form-control" name="description" #description="ngModel" [(ngModel)]="car.description" required></textarea>
             <span *ngIf="!description.dirty && description.touched">El título no es válido</span> 
         </p>
 
         <p>
             <label for="price">Precio</label>
-            <input class="form-control" type="number" name="price" #price="ngModel" [(ngModel)]="car.price" require />
+            <input class="form-control" type="number" name="price" #price="ngModel" [(ngModel)]="car.price" required />
             <span *ngIf="!price.valid && price.touched">El título no es válido</span> 
         </p>
 
         <p>
             <label for="status">¿A la venta?</label>
-            <select class="form-control" name="status" #status="ngModel" [(ngModel)]="car.status">
-                <option value="true">Sí</option>
+            <select class="form-control" name="status" #status="ngModel" [(ngModel)]="car.status" required>
+                <option value="true" selected>Sí</option>
                 <option value="false">No</option>
             </select>
         </p>
