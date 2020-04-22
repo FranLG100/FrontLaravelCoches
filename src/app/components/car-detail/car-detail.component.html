@@ -1,1 +1,6 @@
-<p>car-detail works!</p>
+<div class="col-md-12">
+    <h1>{{car.title}}</h1>
+    <strong *ngIf="car.status=='true'">Este vehículo se encuentra a la venta</strong>
+    <p>{{car.price}} € </p>
+    <p>{{car.description}}</p>
+</div>

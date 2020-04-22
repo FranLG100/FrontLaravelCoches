@@ -15,6 +15,7 @@ export class DefaultComponent implements OnInit{
 
     public title:string;
     public cars:Array<Car>;
+    public token;
 
     constructor(
         private _route:ActivatedRoute,
@@ -23,10 +24,16 @@ export class DefaultComponent implements OnInit{
         private _carService:CarService
     ){
         this.title='Inicio';
+        this.token=this._userService.getToken();
     }
 
     ngOnInit(){
         console.log('default.component cargado correctamente');
+        this.getCars();
+        
+    }
+
+    getCars(){
         this._carService.getCars().subscribe(
             response=>{
                 if(response.status=='success'){
@@ -35,6 +42,17 @@ export class DefaultComponent implements OnInit{
                 console.log(response)
             },error=>{
 
+            }
+        );
+    }
+
+    deleteCar(id){
+        this._carService.delete(this.token,id).subscribe(
+            response=>{
+                this.getCars();
+                //this._router.navigate(['inicio']);
+            },error=>{
+                console.log(<any>error);
             }
         );
     }

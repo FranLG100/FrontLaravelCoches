@@ -11,7 +11,7 @@
         </tr>
         <tr *ngFor="let car of cars">
             <td>
-                <strong>{{car.title}}</strong>
+                <a [routerLink]="['/coche', car.id]">{{car.title}}</a>
             </td>
             <td>
                 {{car.price}}
@@ -22,7 +22,7 @@
             </td>
             <td>
                 <a [routerLink]="['editar-coche',car.id]" class="btn btn-warning">Editar</a>
-                <a href='#' class="btn btn-danger">Borrar</a>
+                <a href='#' class="btn btn-danger" (click)="deleteCar(car.id)">Borrar</a>
             </td>
         </tr>
     </table>
